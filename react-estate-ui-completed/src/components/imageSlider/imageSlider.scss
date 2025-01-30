@@ -1,0 +1,64 @@
+// src/components/imageSlider/ImageSlider.scss
+.slider {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 0%;
+  margin: auto;
+  overflow: hidden;
+
+  .slider-wrapper {
+    display: flex;
+    width: 300%; /* Adjust based on the number of images */
+    transition: transform 1s ease-in-out;
+  }
+
+  .slider-image {
+    width: 100%;
+    opacity: 0;
+    transform: translateX(100%); /* Start off-screen to the right */
+    transition: all 2.5s ease-in-out; /* Smooth transition */
+  }
+
+  .slider-image.active {
+    opacity: 1;
+    transform: translateX(0); /* Move into view */
+  }
+
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+}
+
+/* Keyframes for sliding animation from left to right */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -18,6 +18,7 @@ model Post {
   title      String
   price      Int
   images     String[]
+  
   address    String
   city       String
   bedroom    Int
@@ -33,9 +34,11 @@ model Post {
   savedPosts SavedPost[]
 }
 
+
 enum Type {
   buy
   rent
+  apartment
 }
 
 enum Property {
@@ -75,6 +78,7 @@ model User {
   email      String      @unique
   username   String      @unique
   password   String
+  isAdmin    Boolean
   avatar     String?
   createdAt  DateTime    @default(now())
   posts      Post[]

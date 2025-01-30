@@ -1,6 +1,7 @@
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
+// Get multiple posts based on query parameters
 export const getPosts = async (req, res) => {
   const query = req.query;
 
@@ -18,15 +19,14 @@ export const getPosts = async (req, res) => {
       },
     });
 
-    // setTimeout(() => {
-    res.status(200).json(posts);
-    // }, 3000);
+    res.status(200).json(posts); // Send the response only once
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get posts" });
+    res.status(500).json({ message: "Failed to get posts" }); // Handle error response
   }
 };
 
+// Get a single post by ID
 export const getPost = async (req, res) => {
   const id = req.params.id;
   try {
@@ -56,17 +56,23 @@ export const getPost = async (req, res) => {
               },
             },
           });
-          res.status(200).json({ ...post, isSaved: saved ? true : false });
+          return res
+            .status(200)
+            .json({ ...post, isSaved: saved ? true : false }); // Return after sending response
+        } else {
+          return res.status(200).json({ ...post, isSaved: false }); // Handle invalid token
         }
       });
+    } else {
+      return res.status(200).json({ ...post, isSaved: false }); // Handle no token case
     }
-    res.status(200).json({ ...post, isSaved: false });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get post" });
+    res.status(500).json({ message: "Failed to get post" }); // Handle error response
   }
 };
 
+// Add a new post
 export const addPost = async (req, res) => {
   const body = req.body;
   const tokenUserId = req.userId;
@@ -81,22 +87,24 @@ export const addPost = async (req, res) => {
         },
       },
     });
-    res.status(200).json(newPost);
+    res.status(200).json(newPost); // Send response after post creation
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to create post" });
+    res.status(500).json({ message: "Failed to create post" }); // Handle error response
   }
 };
 
+// Update an existing post (currently no update logic provided)
 export const updatePost = async (req, res) => {
   try {
-    res.status(200).json();
+    res.status(200).json(); // Send an empty success response
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to update posts" });
+    res.status(500).json({ message: "Failed to update posts" }); // Handle error response
   }
 };
 
+// Delete a post by ID
 export const deletePost = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId;
@@ -107,16 +115,16 @@ export const deletePost = async (req, res) => {
     });
 
     if (post.userId !== tokenUserId) {
-      return res.status(403).json({ message: "Not Authorized!" });
+      return res.status(403).json({ message: "Not Authorized!" }); // Authorization error
     }
 
     await prisma.post.delete({
       where: { id },
     });
 
-    res.status(200).json({ message: "Post deleted" });
+    res.status(200).json({ message: "Post deleted" }); // Success response after deletion
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to delete post" });
+    res.status(500).json({ message: "Failed to delete post" }); // Handle error response
   }
 };

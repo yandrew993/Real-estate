@@ -1,0 +1,120 @@
+.single {
+  display: flex;
+  width: 100%;
+
+  .singleContainer {
+    flex: 4;
+    padding: 20px;
+
+    .top {
+      display: flex;
+      gap: 20px;
+
+      .left {
+        flex: 2;
+        position: relative;
+
+        .editButton,
+        .saveButton {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          padding: 10px 20px;
+          background-color: teal;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .editButton:hover,
+        .saveButton:hover {
+          background-color: darkslategray;
+        }
+
+        .title {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 20px;
+        }
+
+        .item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .itemImg {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+          }
+
+          .details {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .detailItem {
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+              padding: 10px 0;
+              border-bottom: 1px solid #ccc;
+
+              .itemKey {
+                font-weight: bold;
+                color: #555;
+              }
+
+              .itemValue {
+                color: #333;
+              }
+
+              input {
+                width: 70%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+              }
+            }
+          }
+        }
+      }
+
+      .right {
+        flex: 3;
+      }
+    }
+
+    .bottom {
+      margin-top: 20px;
+
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.formInput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  label {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+}

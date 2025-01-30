@@ -2,6 +2,7 @@ import { useContext } from "react";
 import SearchBar from "../../components/searchBar/SearchBar";
 import "./homePage.scss";
 import { AuthContext } from "../../context/AuthContext";
+import ImageSlider from "../../components/imageSlider/ImageSlider";
 
 function HomePage() {
   const { currentUser } = useContext(AuthContext);
@@ -18,6 +19,7 @@ function HomePage() {
             repellat provident impedit!
           </p>
           <SearchBar />
+
           <div className="boxes">
             <div className="box">
               <h1>16+</h1>
@@ -32,10 +34,11 @@ function HomePage() {
               <h2>Property Ready</h2>
             </div>
           </div>
+          <ImageSlider />
         </div>
       </div>
       <div className="imgContainer">
-        <img src="/bg.png" alt="" />
+        <ImageSlider />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma.js";
 
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, isAdmin, email, password } = req.body;
 
   try {
     // HASH THE PASSWORD
@@ -16,6 +16,7 @@ export const register = async (req, res) => {
     const newUser = await prisma.user.create({
       data: {
         username,
+        isAdmin,
         email,
         password: hashedPassword,
       },
@@ -57,12 +58,12 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       {
         id: user.id,
-        isAdmin: false,
+        isAdmin: user.isAdmin,
       },
       process.env.JWT_SECRET_KEY,
       { expiresIn: age }
     );
-    const { password: userPassword, ...userInfo } = user;
+    const { password: userPassword, isAdmin, ...userInfo } = user;
 
     res
       .cookie("token", token, {
@@ -71,7 +72,7 @@ export const login = async (req, res) => {
         maxAge: age,
       })
       .status(200)
-      .json(userInfo);
+      .json({ details: { ...userInfo }, isAdmin });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });
